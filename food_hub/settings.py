@@ -80,12 +80,9 @@ DATABASES = {
     'ENGINE': 'django.db.backends.postgresql',
     'NAME': os.getenv("POSTGRES_NAME", "postgres"),
     'USER': os.getenv("POSTGRES_USER", "postgres"),
-    'PASSWORD': ("POSTGRES_PASSWORD", "admin"),
+    'PASSWORD': os.getenv("POSTGRES_PASSWORD", "admin"),
     'HOST': os.getenv("POSTGRES_HOST", "localhost"),
     'PORT': '5432',
-    'OPTIONS': {
-        'options': '-c search_path=foodhub',
-    },
   }
 }
 
