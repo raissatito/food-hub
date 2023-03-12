@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Insert title here</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     </head>
     <body>  
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
@@ -15,97 +16,117 @@
             <a class="nav-link text-dark" href="/discover">Discover Recipe</a>
           </li>
           <li class="nav-item">
-            <strong><a class="nav-link text-dark" href="/">Find Recipe</a></strong>
+            <a class="nav-link text-dark" href="/">Find Recipe</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-dark" href="/analyze">Analyze Recipe</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-dark" href="/auth/profile">Profile</a>
-        </li>
+            <strong><a class="nav-link text-dark" href="/auth/profile">Profile</a></strong>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/auth/logout">logout</a>
+          </li>
       </ul>
       <hr class="mx-5 mb-5"/>
 
         <div class="row justify-content-center">
             <div class="col-6">
+              <h1 class="text-center">
+                Recipes Made By You 
+              </h1>
+              <div class="mb-5"></div>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                   {% for i in results %}
                   <div class="col">
                     <div class="card h-100 mx-3">
                       <div class="ratio ratio-4x3">
-                        <img src="{{i.image}}" class="card-img-top" alt="no image">
+                        <img src="{{i.image_link}}" class="card-img-top" alt="no image">
                       </div>
                       <div class="card-body">
-                        <h5 class="card-title">{{i.title}}</h5>
-                        <button type="button" class="btn btn-primary mt-3 text-end" data-bs-toggle="modal" data-bs-target="#exampleModal{{forloop.counter}}">
+                        <h5 class="card-title">{{i.recipe_value.title}}</h5>
+                        <div class="btn-group">
+                        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal{{forloop.counter}}">
                           Detail
                         </button>
+                        <div class = "btn-group">
+                        <button type="button" class="btn btn-outline-secondary mt-3 px-1" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="bi bi-three-dots-vertical p-0"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                          {% if i.is_public %}
+                          <li><a class="dropdown-item" href="/set-visibility/{{i.recipe_id}}">Set Private</a></li>
+                          {% else %}
+                          <li><a class="dropdown-item" href="/set-visibility/{{i.recipe_id}}">Set Public</a></li>
+                          {% endif %}
+                          <li><a class="dropdown-item" href="/delete/{{i.recipe_id}}">Delete Recipe</a></li>
+                        </ul>
+                        </div>
+                      </div>
                         <div class="modal fade" id="exampleModal{{forloop.counter}}" tabindex="-1" aria-labelledby="exampleModalLabel{{forloop.counter}}" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-scrollable">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel{{forloop.counter}}">{{i.title}}</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel{{forloop.counter}}">{{i.recipe_value.title}}</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div class="modal-body">
                                 <div class="row justify-content-center">
                                   <div class="col-11">
                                     <div class="ratio my-3 ratio-4x3">
-                                      <img src="{{i.image}}" class="card-img-top" alt="no image">
+                                      <img src="{{i.image_link}}" class="card-img-top" alt="no image">
                                     </div>
-                                    {% if i.healthScore <= 33 %}
-                                    <span class="badge text-bg-danger">Health Score: {{i.healthScore}}</span>
-                                    {% elif i.healthScore <= 66 %}
-                                    <span class="badge text-bg-warning">Health Score: {{i.healthScore}}</span>
+                                    {% if i.recipe_value.healthScore <= 33 %}
+                                    <span class="badge text-bg-danger">Health Score: {{i.recipe_value.healthScore}}</span>
+                                    {% elif i.recipe_value.healthScore <= 66 %}
+                                    <span class="badge text-bg-warning">Health Score: {{i.recipe_value.healthScore}}</span>
                                     {% else %}
-                                    <span class="badge text-bg-success">Health Score: {{i.healthScore}}</span>
+                                    <span class="badge text-bg-success">Health Score: {{i.recipe_value.healthScore}}</span>
                                     {% endif %}
-                                    {% if i.vegetarian %}
+                                    {% if i.recipe_value.vegetarian %}
                                     <span class="badge text-bg-success">Vegetarian</span>
                                     {% endif %}
-                                    {% if i.vegan %}
+                                    {% if i.recipe_value.vegan %}
                                     <span class="badge text-bg-success">Vegan</span>
                                     {% endif %}
-                                    {% if i.glutenFree %}
+                                    {% if i.recipe_value.glutenFree %}
                                     <span class="badge text-bg-success">Gluten Free</span>
                                     {% endif %}
-                                    {% if i.dairyFree %}
+                                    {% if i.recipe_value.dairyFree %}
                                     <span class="badge text-bg-success">Dairy Free</span>
                                     {% endif %}
-                                    {% if i.veryHealthy %}
+                                    {% if i.recipe_value.veryHealthy %}
                                     <span class="badge text-bg-success">Healthy</span>
                                     {% endif %}
-                                    {% if i.cheap %}
+                                    {% if i.recipe_value.cheap %}
                                     <span class="badge text-bg-success">Cheap</span>
                                     {% endif %}
-                                    {% if i.veryPopular %}
+                                    {% if i.recipe_value.veryPopular %}
                                     <span class="badge text-bg-success">Popular</span>
                                     {% endif %}
-                                    {% if i.sustainable %}
+                                    {% if i.recipe_value.sustainable %}
                                     <span class="badge text-bg-success">Sustainable</span>
                                     {% endif %}
-                                    {% if i.lowFodmap %}
+                                    {% if i.recipe_value.lowFodmap %}
                                     <span class="badge text-bg-success">Low Fodmap</span>
                                     {% endif %}
                                     <div class="row mt-3">
                                       <div class="col-6">
-                                      {% for j in i.nutrition.nutrients %}
-                                        <div>{{j.name}}: {{j.amount}} {{j.unit}}</div>
-                                        {% if forloop.counter == 3 %}
-                                          </div>
-                                          <div class="col-6">
+                                      {% for j in i.recipe_value.nutrition.nutrients %}
+                                        {% if j.name == "Calories" or j.name == "Fat" or j.name == "Protein" or j.name == "Carbohydrates" or j.name == "Alcohol" or j.name == "Sugar" %}
+                                          <div>{{j.name}}: {{j.amount}} {{j.unit}}</div>
                                         {% endif %}
                                       {% endfor %}
                                       </div>
                                     </div>
                                     <div class="mt-3"></div>
                                     <h4>Ingredients: </h4>
-                                    {% for j in i.extendedIngredients %}
+                                    {% for j in i.recipe_value.extendedIngredients %}
                                       <div>{{j.original}}</div>
                                     {% endfor %}
                                     <div class="mt-3"></div>
                                     <h4>Instructions: </h4>
-                                    {% for j in i.analyzedInstructions %}
+                                    {% for j in i.recipe_value.analyzedInstructions %}
                                       {% for k in j.steps %}
                                         <div>{{k.number}}. {{k.step}}</div>
                                       {% endfor %}

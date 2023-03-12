@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Insert title here</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    </head>
+    <body>  
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+        <ul class="nav justify-content-center mt-5">
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="/discover">Discover Recipe</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="/">Find Recipe</a>
+            </li>
+            <li class="nav-item">
+                <strong><a class="nav-link text-dark" href="/analyze">Analyze Recipe</a></strong>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="/auth/profile">Profile</a>
+            </li>
+        </ul>
+        <hr class="mx-5 mb-5"/>
+
+        <form method="post">
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <div class="row">
+                        <div class= "col-3">
+                            Food name
+                        </div>
+                        <div class= "col-9">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="food_name" aria-label="food_name" id="food_name" aria-describedby="basic-addon1" required>
+                            </div>
+                        </div>
+                        <div class= "col-3">
+                            Ingredient
+                        </div>
+                        <div class= "col-9">
+                            <div class="input-group mb-3">
+                                <textarea rows="3" class="form-control" name="ingredients" placeholder="A list of ingredient seperated by comma, example: 1 tbsp oil, 2 egg" aria-label="With textarea" required></textarea>
+                            </div>
+                        </div>
+                        <div class= "col-3">
+                            Steps
+                        </div>
+                        <div class= "col-9">
+                            <div class="input-group mb-3">
+                                <textarea row="7" class="form-control" name="steps" placeholder="" aria-label="With textarea" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-5 "></div>
+                        <div class= "col-2">
+                            <button class="btn btn-primary w-100 mt-5" type="submit">Analyze</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>
