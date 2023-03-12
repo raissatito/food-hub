@@ -5,8 +5,6 @@ WORKDIR /app
 RUN apk update 
 RUN apk add python3-dev gcc libc-dev
 COPY requirements.txt /app
-COPY Pipfile /app
-COPY Pipfile.lock /app
 RUN pip install -r requirements.txt
 COPY . /app 
 CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
